@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wisata_mobile_5/models/destination_model.dart';
+import 'package:wisata_mobile_5/screens/detaildestination.dart';
 import 'package:wisata_mobile_5/utils/const.dart';
 import 'package:wisata_mobile_5/widgets/popular_destination.dart';
 import 'package:wisata_mobile_5/widgets/rekomendasi_destination.dart';
@@ -67,7 +68,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 (index) => Padding(
                   padding: EdgeInsets.only(right: 15),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => DetailDestinationScreen(
+                                  destination: popular[index])));
+                    },
                     child: PopularDestination(destination: popular[index]),
                   ),
                 ),
@@ -108,7 +115,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   (index) => Padding(
                     padding: EdgeInsets.only(bottom: 10),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => DetailDestinationScreen(
+                                    destination: rekomendasi[index])));
+                      },
                       child: RekomendasiDestination(
                           destination: rekomendasi[index]),
                     ),
@@ -117,6 +130,41 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 18),
+                  decoration: BoxDecoration(
+                      color: kButtonColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List.generate(
+                      icons.length,
+                      (index) => GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedPage = index;
+                          });
+                        },
+                        child: Icon(
+                          icons[index],
+                          size: 32,
+                          color: selectedPage == index
+                              ? Colors.white
+                              : Colors.white.withOpacity(0.4),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 25)
+              ],
+            ),
+          )
         ],
       ),
     );
